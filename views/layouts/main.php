@@ -63,7 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     //         ['label' => 'Leadership Competencies', 'url' => ['/master-template/index']],
                     //     ],
                     // ],
-                    ['label' => 'Leadership Competencies', 'url' => ['/master-template/index']],
+                    ['label' => 'Master Template', 'url' => ['/master-template/index']],
                     // ['label' => 'Contact', 'url' => ['/site/contact']],
                     // Yii::$app->user->isGuest
                     //     ? ['label' => 'Login', 'url' => ['/site/login']]

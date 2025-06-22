@@ -30,6 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'positionId' => $model->id,
                 ]),
             ],
+            [
+                'label' => 'Leadership Competencies',
+                'content' => $this->render('table_leadership', [
+                    'dataProviders' => $dataProviders,  // <-- ini diperbaiki jadi pakai jamak
+                    'positionId' => $model->id,
+                ]),
+            ],
 
             [
                 'label' => 'Overview',

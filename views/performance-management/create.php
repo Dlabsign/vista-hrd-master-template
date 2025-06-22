@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\MasterPerformanceManagement $model */
 
-$this->title = 'Create Master Performance Management';
-$this->params['breadcrumbs'][] = ['label' => 'Master Performance Managements', 'url' => ['index']];
+$this->title = 'Create Master Core';
+$this->params['breadcrumbs'][] = ['label' => 'Master Core', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="master-performance-management-create">

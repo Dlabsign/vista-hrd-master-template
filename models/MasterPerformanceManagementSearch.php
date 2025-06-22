@@ -41,7 +41,7 @@ class MasterPerformanceManagementSearch extends MasterPerformanceManagement
      */
     public function search($params, $formName = null)
     {
-        $query = MasterPerformanceManagement::find();
+        $query = MasterPerformanceManagement::find()->where(['flag' => 1]);
 
         // add conditions that should always apply here
 

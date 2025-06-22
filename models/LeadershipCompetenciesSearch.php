@@ -41,7 +41,8 @@ class LeadershipCompetenciesSearch extends LeadershipCompetencies
      */
     public function search($params, $formName = null)
     {
-        $query = LeadershipCompetencies::find();
+        // $query = LeadershipCompetencies::find();
+        $query = LeadershipCompetencies::find()->where(['flag' => 1]);
 
         // add conditions that should always apply here
 

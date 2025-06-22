@@ -1,5 +1,6 @@
 <?php
 
+use app\models\MasterPerformanceManagement;
 use app\models\WorkPerformance;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -30,19 +31,28 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'attribute' => 'definition',
+                'attribute' => 'Area',
+                'value' => function ($model) {
+                        return $model->area ? $model->area->core : '(not set)';
+                    },
+            ],
+            [
+                'attribute' => 'Defintion',
                 'value' => function ($model) {
                         $definition = \app\models\MasterPerformanceManagement::findOne($model->definition);
                         return $definition ? $definition->definition : null;
                     },
             ],
-            'objectives:ntext',
             [
-                'attribute' => 'created_at',
-                'format' => ['date', 'php:d M Y'], // format sesuai kebutuhan
+                'attribute' => 'Objective',
+                'value' => function ($model) {
+                        return $model->objectives ? $model->objectives : '(not set)';
+                    },
             ],
+
             [
                 'class' => ActionColumn::className(),
+                'template' => '{update} {delete}', // Only show update and delete buttons
                 'urlCreator' => function ($action, WorkPerformance $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

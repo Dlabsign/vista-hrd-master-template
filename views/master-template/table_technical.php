@@ -23,13 +23,14 @@ use yii\grid\GridView;
             [
                 'attribute' => 'Area',
                 'value' => function ($model) {
-                return $model->core->core ?? '-';
+                return $model->area->core ?? '-';
             },
             ],
+
             [
                 'attribute' => 'Key Result',
                 'value' => function ($model) {
-                return $model->key_result ?? '-';
+                return $model->area->key_val ?? '-';
             },
             ],
             [
@@ -47,11 +48,9 @@ use yii\grid\GridView;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'master-template',
-                'template' => '{update} {delete}',
+                'template' => ' {delete}',
                 'urlCreator' => function ($action, $model, $key, $index) {
-                if ($action === 'update') {
-                    return ['master-template/update-technical', 'id' => $model->id];
-                }
+
                 if ($action === 'delete') {
                     return ['master-template/delete', 'id' => $model->id];
                 }

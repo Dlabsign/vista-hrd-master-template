@@ -6,9 +6,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\MasterTemplate;
 
-/**
- * MasterTemplateSearch represents the model behind the search form of `app\models\MasterTemplate`.
- */
 class MasterTemplateSearch extends MasterTemplate
 {
     /**
@@ -23,26 +20,15 @@ class MasterTemplateSearch extends MasterTemplate
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     * @param string|null $formName Form name to be used into `->load()` method.
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params, $formName = null)
     {
-        $query = MasterTemplate::find();
+        $query = MasterTemplate::find()->where(['flag' => 1]);
 
         // add conditions that should always apply here
 

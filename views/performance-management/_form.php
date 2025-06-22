@@ -11,8 +11,6 @@ use yii\widgets\ActiveForm;
 <div class="master-performance-management-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-
     <?= $form->field($model, 'core')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'key_val')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'definition')->textInput(['maxlength' => true]) ?>

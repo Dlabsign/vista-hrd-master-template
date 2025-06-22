@@ -41,7 +41,8 @@ class GeneralCompetenciesSearch extends GeneralCompetencies
      */
     public function search($params, $formName = null)
     {
-        $query = GeneralCompetencies::find();
+        $query = GeneralCompetencies::find()->where(['flag' => 1]);
+        ;
 
         // add conditions that should always apply here
 

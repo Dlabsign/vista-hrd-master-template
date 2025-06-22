@@ -41,7 +41,7 @@ class WorkPerformanceSearch extends WorkPerformance
      */
     public function search($params, $formName = null)
     {
-        $query = WorkPerformance::find();
+        $query = WorkPerformance::find()->where(['flag' => 1]);
 
         // add conditions that should always apply here
 

@@ -31,27 +31,33 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'attribute' => 'core_id',
+                'attribute' => 'Core Value',
                 'value' => function ($model) {
                         return $model->area ? $model->area->core : '(not set)';
                     },
             ],
             [
-                'attribute' => 'area_id',
+                'attribute' => 'Key Area',
                 'value' => function ($model) {
                         return $model->area ? $model->area->key_val : '(not set)';
                     },
             ],
             [
-                'attribute' => 'definition',
+                'attribute' => 'Definition',
                 'value' => function ($model) {
                         return $model->area ? $model->area->definition : '(not set)';
                     },
             ],
-            'objectives',
+            [
+                'attribute' => 'Objective',
+                'value' => function ($model) {
+                        return $model->objectives ? $model->objectives : '(not set)';
+                    },
+            ],
             //'created_at',
             [
                 'class' => ActionColumn::className(),
+                'template' => '{update} {delete}', // Only show update and delete buttons
                 'urlCreator' => function ($action, LeadershipCompetencies $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

@@ -18,30 +18,21 @@ class GeneralCompetencies extends \yii\db\ActiveRecord
 {
 
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'general_competencies';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['core_id', 'area_id', 'definition', 'objectives'], 'required'],
-            [['core_id', 'area_id'], 'integer'],
+            [['core_id', 'area_id', 'flag'], 'integer'],
             [['created_at'], 'safe'],
             [['definition', 'objectives'], 'string', 'max' => 100],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -50,6 +41,7 @@ class GeneralCompetencies extends \yii\db\ActiveRecord
             'area_id' => 'Key Area',
             'definition' => 'Definition',
             'objectives' => 'Objectives',
+            'flag' => 'flag',
             'created_at' => 'Created At',
         ];
     }
@@ -57,6 +49,25 @@ class GeneralCompetencies extends \yii\db\ActiveRecord
     public function getArea()
     {
         return $this->hasOne(MasterPerformanceManagement::class, ['id' => 'area_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->created_at = date('Y-m-d H:i:s');
+                $this->flag = 1; // Set default aktif
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function delete()
+    {
+        // Soft delete: hanya update kolom flag = 0
+        $this->flag = 0;
+        return $this->save(false, ['flag']); // Simpan hanya kolom flag
     }
 
 }

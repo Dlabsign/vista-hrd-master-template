@@ -18,7 +18,7 @@ class TargetPerformanceSearch extends TargetPerformance
     {
         return [
             [['id', 'area_id'], 'integer'],
-            [['result', 'created_at'], 'safe'],
+            [['key_result', 'created_at'], 'safe'],
             [['unit'], 'number'],
         ];
     }
@@ -42,9 +42,8 @@ class TargetPerformanceSearch extends TargetPerformance
      */
     public function search($params, $formName = null)
     {
-        $query = TargetPerformance::find();
+        $query = TargetPerformance::find()->where(['flag' => 1]);
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -66,7 +65,7 @@ class TargetPerformanceSearch extends TargetPerformance
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'result', $this->result]);
+        $query->andFilterWhere(['like', 'key_result', $this->key_result]);
 
         return $dataProvider;
     }

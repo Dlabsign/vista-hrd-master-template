@@ -1,5 +1,6 @@
 <?php
 use app\models\GeneralCompetencies;
+use app\models\LeadershipCompetencies;
 use app\models\MasterPerformanceManagement;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
 <?php
 /** @var MasterPerformanceManagement[] $items */
-$items = GeneralCompetencies::find()
+$items = LeadershipCompetencies::find()
     ->where(['flag' => 1])
     ->all();
 

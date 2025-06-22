@@ -15,11 +15,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'area_id')->dropDownList(
-        ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'key_val')
+        ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'key_val')
     ) ?>
-        <?= $form->field($model, 'definition')->dropDownList(
-            ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'definition')
-        ) ?>
+    <?= $form->field($model, 'definition')->dropDownList(
+        ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'definition')
+    ) ?>
     <?= $form->field($model, 'objectives')->textarea(['rows' => 6]) ?>
 
 

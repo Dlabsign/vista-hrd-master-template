@@ -9,13 +9,22 @@ use app\models\MasterPerformanceManagement;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
+<?php
+$items = MasterPerformanceManagement::find()
+    ->where(['flag' => 1])
+    ->all();
+
+$options = ArrayHelper::map($items, 'id', function ($model) {
+    return $model->core . ' - ' . $model->key_val;
+});
+?>
+
 <div class="master-template-form">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'core_id')->dropDownList(
-        ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'core')
-    ) ?>
-    <?= $form->field($model, 'key_result')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'area_id')->dropDownList($options, ['prompt' => '-']) ?>
+
+
     <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'unit')->dropDownList([
         'Nominal' => 'Nominal',

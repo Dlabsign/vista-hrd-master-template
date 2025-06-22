@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\LeadershipCompetencies;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,10 +43,10 @@ class MasterTemplateController extends Controller
     {
         $model = MasterPosition::findOne($id);
 
-        // Ambil semua template_type yang ada di posisi ini
+        // Ambil semua template_type dari posisi ini dengan flag = 1
         $types = MasterTemplate::find()
             ->select('template_type')
-            ->where(['position_id' => $id])
+            ->where(['position_id' => $id, 'flag' => 1])
             ->groupBy('template_type')
             ->column();
 
@@ -53,25 +54,35 @@ class MasterTemplateController extends Controller
 
         foreach ($types as $type) {
             $query = MasterTemplate::find()
-                ->where(['position_id' => $id, 'template_type' => $type]);
+                ->where([
+                    'position_id' => $id,
+                    'template_type' => $type,
+                    'flag' => 1, // tambahkan filter flag
+                ]);
 
             $dataProviders[$type] = new \yii\data\ActiveDataProvider([
                 'query' => $query,
-                'pagination' => false, // supaya semua data muncul tanpa pagination
+                'pagination' => false,
             ]);
         }
-        $generalProvider = new ActiveDataProvider([
-            'query' => MasterTemplate::find()->where(['position_id' => $id, 'template_type' => 'general']),
+
+        // Untuk generalProvider juga tambahkan flag = 1
+        $generalProvider = new \yii\data\ActiveDataProvider([
+            'query' => MasterTemplate::find()
+                ->where([
+                    'position_id' => $id,
+                    'template_type' => 'general',
+                    'flag' => 1,
+                ]),
+            'pagination' => false,
         ]);
+
         return $this->render('detail_template', [
             'model' => $model,
             'dataProviders' => $dataProviders,
             'generalProvider' => $generalProvider,
-
         ]);
     }
-
-
 
     public function actionSaveTechnical($position_id)
     {
@@ -203,12 +214,32 @@ class MasterTemplateController extends Controller
         $model = new MasterTemplate();
         $model->position_id = $position_id;
 
+        $model->general = 1;
+        $model->leadership = 0;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'General competency saved.');
             return $this->redirect(['detail-template', 'id' => $position_id]);
         }
 
         return $this->render('_form_general', [
+            'model' => $model,
+        ]);
+    }
+    public function actionCreateLeadership($position_id)
+    {
+        $model = new MasterTemplate();
+        $model->position_id = $position_id;
+
+        $model->general = 0;
+        $model->leadership = 1;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Leadership competency saved.');
+            return $this->redirect(['detail-template', 'id' => $position_id]);
+        }
+
+        return $this->render('_form_leadership', [
             'model' => $model,
         ]);
     }
@@ -246,4 +277,24 @@ class MasterTemplateController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionUpdateLeadership($id)
+    {
+        $model = LeadershipCompetencies::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Leadership Competency not found.');
+        }
+
+        $position_id = $model->position_id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Leadership competency updated.');
+            return $this->redirect(['detail-template', 'id' => $position_id]);
+        }
+
+        return $this->render('_form_leadership', [
+            'model' => $model,
+        ]);
+    }
+
 }

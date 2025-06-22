@@ -30,15 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'attribute' => 'area_id',
+                'attribute' => 'Area',
                 'value' => function ($model) {
-                        return $model->area ? $model->area->key_val : '(not set)';
+                        return $model->area->core ?? '(not set)';
                     },
             ],
-            'result',
-            'unit',
+            [
+                'attribute' => 'Key Results',
+                'value' => function ($model) {
+                        return $model->area->key_val ?? '(not set)';
+                    },
+            ],
+            [
+                'attribute' => 'Unit',
+                'value' => function ($model) {
+                        return $model->unit ?? '(not set)';
+                    },
+            ],
             [
                 'class' => ActionColumn::className(),
+                'template' => '{update} {delete}', // Only show update and delete buttons
                 'urlCreator' => function ($action, TargetPerformance $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

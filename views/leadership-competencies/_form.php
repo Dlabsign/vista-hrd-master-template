@@ -15,18 +15,19 @@ use app\models\MasterPerformanceManagement;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'core_id')->dropDownList(
-        ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'core')
+        ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'core')
     ) ?>
 
+
     <?= $form->field($model, 'area_id')->dropDownList(
-        ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'key_val')
+        ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'key_val')
     ) ?>
 
     <?= $form->field($model, 'definition')->dropDownList(
-        ArrayHelper::map(MasterPerformanceManagement::find()->all(), 'id', 'definition')
+        ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'definition')
     ) ?>
 
-    <?= $form->field($model, 'objectives')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'objectives')->textarea(['rows' => 6]) ?>
 
 
     <div class="form-group">

@@ -8,7 +8,7 @@ use yii\grid\GridView;
 ?>
 
 <p>
-    <?= Html::a('Create General', ['create-general', 'position_id' => $positionId], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Create Leadership', ['create-leadership', 'position_id' => $positionId], ['class' => 'btn btn-success']) ?>
 </p>
 
 <?php foreach ($dataProviders as $type => $dataProvider): ?>
@@ -18,7 +18,7 @@ use yii\grid\GridView;
 
     foreach ($models as $model) {
         // Ambil hanya data general yang kolom unit dan template_type bernilai NULL
-        if ($model->general == 1 && $model->unit === null && $model->template_type === null) {
+        if ($model->leadership == 1 && $model->unit === null && $model->template_type === null) {
             $filteredModels[] = $model;
         }
     }
@@ -65,7 +65,7 @@ use yii\grid\GridView;
             [
                 'attribute' => 'Objectives',
                 'value' => function ($model) {
-                    return $model->generalas->objectives ?? '(not set)';
+                    return $model->leadershipas->objectives ?? '(not set)';
                 },
             ],
             [
