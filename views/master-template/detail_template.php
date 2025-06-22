@@ -37,11 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'positionId' => $model->id,
                 ]),
             ],
-
             [
                 'label' => 'Overview',
-                'content' => '<div>Ringkasan dari semua kompetensi bisa diletakkan di sini.</div>',
+                'content' => $this->render('table_overview', [
+                    'dataProviders' => $dataProviders,  // <-- ini diperbaiki jadi pakai jamak
+                    'positionId' => $model->id,
+                ]),
             ],
+
+
         ],
     ]) ?>
 

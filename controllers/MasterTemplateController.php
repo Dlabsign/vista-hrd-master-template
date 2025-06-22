@@ -84,6 +84,9 @@ class MasterTemplateController extends Controller
         ]);
     }
 
+    
+
+
     public function actionSaveTechnical($position_id)
     {
         $model = new MasterTemplate();
@@ -198,6 +201,10 @@ class MasterTemplateController extends Controller
     {
         $model = new MasterTemplate();
         $model->position_id = $position_id;
+
+        $model->general = 0;
+        $model->leadership = 0;
+        $model->technical = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Technical competency saved.');

@@ -35,7 +35,7 @@ class MasterTemplate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['definition_id', 'area_id', 'technical', 'general', 'leadership', 'flag'], 'integer'],
+            [[ 'area_id', 'technical', 'general', 'leadership', 'flag'], 'integer'],
             [['weight'], 'number'],
             [['created_at', 'unit', 'key_result', 'template_type'], 'safe'],
         ];
@@ -49,7 +49,6 @@ class MasterTemplate extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'position_id' => 'Position ID',
-            'definition_id' => 'Definition',
             'technical' => 'Technical',
             'general' => 'General',
             'unit' => 'Unit',

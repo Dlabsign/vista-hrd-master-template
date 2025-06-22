@@ -41,13 +41,13 @@ use yii\grid\GridView;
             [
                 'attribute' => 'Core Value',
                 'value' => function ($model) {
-                    return $model->area->core ?? '(not set)';
+                    return $model->leadershipas->area->core ?? '(not set)';
                 },
             ],
             [
                 'attribute' => 'Key Area',
                 'value' => function ($model) {
-                    return $model->area->key_val ?? '(not set)';
+                    return $model->leadershipas->area->key_val ?? '(not set)';
                 },
             ],
             [
@@ -59,7 +59,7 @@ use yii\grid\GridView;
             [
                 'attribute' => 'Definition',
                 'value' => function ($model) {
-                    return $model->area->definition ?? '(not set)';
+                    return $model->leadershipas->area->definition ?? '(not set)';
                 },
             ],
             [

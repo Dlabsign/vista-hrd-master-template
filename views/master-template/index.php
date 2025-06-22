@@ -12,14 +12,24 @@ use yii\helpers\Html;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'position_name',
             [
-                'attribute' => 'position_department',
+                'attribute' => 'Position',
+                'value' => function ($model) {
+                        return $model->position_name;
+                    },
+            ],
+            [
+                'attribute' => 'Departmen',
                 'value' => function ($model) {
                         return $model->department && $model->department->is_void == 0 ? $model->department->department_name : 'Non Active Depart';
                     },
             ],
-            'timestamp',
+            [
+                'attribute' => 'Status',
+                'value' => function ($model) {
+                        return 'Created At '. $model->timestamp;
+                    },
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{detail-template}',

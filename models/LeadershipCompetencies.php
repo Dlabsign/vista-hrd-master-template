@@ -61,6 +61,10 @@ class LeadershipCompetencies extends \yii\db\ActiveRecord
     {
         return $this->hasOne(MasterPerformanceManagement::class, ['id' => 'area_id']);
     }
+    public function getAreas()
+    {
+        return $this->hasOne(MasterPerformanceManagement::class, ['id' => 'area_id']);
+    }
 
     public function beforeSave($insert)
     {
