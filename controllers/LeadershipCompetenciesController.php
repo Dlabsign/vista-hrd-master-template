@@ -46,7 +46,7 @@ class LeadershipCompetenciesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirecct(['index']); // Redirect to the 'index' action after updating
+                return $this->redirect(['index']); // Redirect to the 'index' action after updating
             }
         } else {
             $model->loadDefaultValues();
