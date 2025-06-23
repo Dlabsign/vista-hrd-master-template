@@ -84,7 +84,7 @@ class MasterTemplateController extends Controller
         ]);
     }
 
-    
+
 
 
     public function actionSaveTechnical($position_id)
@@ -146,13 +146,16 @@ class MasterTemplateController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $position_id = $model->position_id; // Ambil position_id-nya
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Template updated.');
+            return $this->redirect(['detail-template', 'id' => $position_id]); // Kembali ke halaman posisi
         }
 
         return $this->render('update', compact('model'));
     }
+
 
     public function actionDelete($id)
     {

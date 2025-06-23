@@ -65,4 +65,9 @@ class MasterPosition extends \yii\db\ActiveRecord
     {
         return $this->hasOne(MasterDepartment::class, ['id' => 'position_department']);
     }
+    public function getTemplates()
+    {
+        return $this->hasMany(MasterTemplate::class, ['position_id' => 'id'])->where(['flag' => 1]);
+    }
+
 }

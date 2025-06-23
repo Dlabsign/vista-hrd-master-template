@@ -68,13 +68,13 @@ use yii\grid\GridView;
                     return $model->leadershipas->objectives ?? '(not set)';
                 },
             ],
-            [
+             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'master-template',
-                'template' => '{delete}',
+                'template' => '{update} {delete}', // Tampilkan tombol update dan delete
                 'urlCreator' => function ($action, $model, $key, $index) {
-                    if ($action === 'delete') {
-                        return ['master-template/delete', 'id' => $model->id];
+                    if (in_array($action, ['delete', 'update'])) {
+                        return ['master-template/' . $action, 'id' => $model->id];
                     }
                 },
             ],

@@ -43,7 +43,6 @@ class LeadershipCompetenciesController extends Controller
     public function actionCreate()
     {
         $model = new LeadershipCompetencies();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['index']); // Redirect to the 'index' action after updating
@@ -79,7 +78,6 @@ class LeadershipCompetenciesController extends Controller
         if (($model = LeadershipCompetencies::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
