@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\MasterPosition;
+use app\models\TemplateOverview;
 
 /**
- * MasterPositionSearch represents the model behind the search form of `app\models\MasterPosition`.
+ * TemplateOverviewSearch represents the model behind the search form of `app\models\TemplateOverview`.
  */
-class MasterPositionSearch extends MasterPosition
+class TemplateOverviewSearch extends TemplateOverview
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class MasterPositionSearch extends MasterPosition
     public function rules()
     {
         return [
-            [['id', 'is_void'], 'integer'],
-            [['position_name', 'timestamp', 'position_department', 'position_office_status', 'position_office_placement'], 'safe'],
+            [['id', 'general', 'leadership', 'target', 'work'], 'integer'],
         ];
     }
 
@@ -35,20 +34,21 @@ class MasterPositionSearch extends MasterPosition
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
-        $query = MasterPosition::find();
-        $query->joinWith(['department']);
+        $query = TemplateOverview::find();
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -59,12 +59,12 @@ class MasterPositionSearch extends MasterPosition
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'master_position.is_void' => 0,
-            'timestamp' => $this->timestamp,
+            'general' => $this->general,
+            'leadership' => $this->leadership,
+            'target' => $this->target,
+            'work' => $this->work,
         ]);
 
-        $query->andFilterWhere(['like', 'position_name', $this->position_name]);
-        $query->andFilterWhere(['like', 'master_department.department_name', $this->position_department]);
         return $dataProvider;
     }
 }

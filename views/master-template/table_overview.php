@@ -1,62 +1,50 @@
 <?php
 use yii\helpers\Html;
+use yii\grid\GridView;
 
-/** @var yii\data\ActiveDataProvider[] $dataProviders */
-
-$sum = ['technical' => 0, 'general' => 0, 'leadership' => 0];
-$count = ['technical' => 0, 'general' => 0, 'leadership' => 0];
-
-// Loop semua data dari berbagai template_type (probation, PKWT, dst)
-foreach ($dataProviders as $provider) {
-    $models = $provider->getModels();
-
-    foreach ($models as $model) {
-        if ($model->technical == 1 && is_numeric($model->weight)) {
-            $sum['technical'] += $model->weight;
-            $count['technical']++;
-        }
-        if ($model->general == 1 && is_numeric($model->weight)) {
-            $sum['general'] += $model->weight;
-            $count['general']++;
-        }
-        if ($model->leadership == 1 && is_numeric($model->weight)) {
-            $sum['leadership'] += $model->weight;
-            $count['leadership']++;
-        }
-    }
-}
-
-// Hitung rata-rata & total
-$avg = [];
-$totalWeight = 0;
-foreach (['technical', 'general', 'leadership'] as $type) {
-    if ($count[$type] > 0) {
-        $avg[$type] = round($sum[$type] / $count[$type], 2);
-        $totalWeight += $avg[$type];
-    } else {
-        $avg[$type] = null;
-    }
-}
+/** @var array $overview */
+/** @var int $positionId */
 ?>
 
-<div class="overview-box">
+<p>
+    <?= Html::a('Create Overview', ['create-overview', 'positionId' => $positionId], ['class' => 'btn btn-success']) ?>
+</p>
+<?= GridView::widget([
+    'dataProvider' => $overview, // ✅ benar
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'attribute' => 'General',
+            'value' => function ($model) {
+                return $model->general !== null && $model->general !== '' ? $model->general . ' %' : '-';
+            },
+        ],
+        [
+            'attribute' => 'Leadership',
+            'value' => function ($model) {
+                return $model->leadership !== null && $model->leadership !== '' ? $model->leadership . ' %' : '-';
+            },
+        ],
+        [
+            'attribute' => 'Target',
+            'value' => function ($model) {
+                return $model->target !== null && $model->target !== '' ? $model->target . ' %' : '-';
+            },
+        ],
+        [
+            'attribute' => 'Work',
+            'value' => function ($model) {
+                return $model->work !== null && $model->work !== '' ? $model->work . ' %' : '-';
+            },
+        ],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'controller' => 'master-template',
+            'template' => '{update} {delete}',
+            'urlCreator' => function ($action, $model, $key, $index) {
+                return ["master-template/{$action}-overview", 'id' => $model->id];
+            },
+        ],
 
-    <table class="table table-bordered text-center">
-        <thead>
-            <tr>
-                <th>Technical Competencies</th>
-                <th>General Competencies</th>
-                <th>Leadership Competencies</th>
-                <th>Total Weighing</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><?= $avg['technical'] !== null ? $avg['technical'] . '%' : 'Not Applied' ?></td>
-                <td><?= $avg['general'] !== null ? $avg['general'] . '%' : 'Not Applied' ?></td>
-                <td><?= $avg['leadership'] !== null ? $avg['leadership'] . '%' : 'Not Applied' ?></td>
-                <td><strong><?= round($totalWeight, 2) ?>%</strong></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    ],
+]) ?>

@@ -35,7 +35,7 @@ class MasterTemplate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'area_id', 'technical', 'general', 'leadership', 'flag'], 'integer'],
+            [['area_id', 'technical', 'general', 'leadership', 'flag'], 'integer'],
             [['weight'], 'number'],
             [['created_at', 'unit', 'key_result', 'template_type'], 'safe'],
         ];
@@ -79,6 +79,7 @@ class MasterTemplate extends \yii\db\ActiveRecord
     {
         return $this->hasOne(LeadershipCompetencies::class, ['id' => 'area_id']);
     }
+
 
     // public function beforeSave($insert)
     // {

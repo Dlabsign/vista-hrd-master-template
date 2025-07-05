@@ -53,6 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->objectives ? $model->objectives : '(not set)';
                     },
             ],
+            [
+                'attribute' => 'Objectives (Indo)',
+                'value' => function ($model) {
+                        return $model->objectives_indo ? $model->objectives_indo : '(not set)';
+                    },
+            ],
 
 
             [

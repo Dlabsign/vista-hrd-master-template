@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\LeadershipCompetencies;
+use app\models\TemplateOverview;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -32,7 +33,6 @@ class MasterTemplateController extends Controller
     {
         $searchModel = new MasterPositionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['is_void' => 1]);
         $dataProvider->pagination = false;
 
         return $this->render('index', compact('searchModel', 'dataProvider'));
@@ -77,15 +77,18 @@ class MasterTemplateController extends Controller
             'pagination' => false,
         ]);
 
+        $overview = new \yii\data\ActiveDataProvider([
+            'query' => TemplateOverview::find()->where(['position_id' => $id, 'flag' => 1]),
+            'pagination' => false,
+        ]);
+
         return $this->render('detail_template', [
             'model' => $model,
             'dataProviders' => $dataProviders,
             'generalProvider' => $generalProvider,
+            'overview' => $overview,
         ]);
     }
-
-
-
 
     public function actionSaveTechnical($position_id)
     {
@@ -254,6 +257,8 @@ class MasterTemplateController extends Controller
         ]);
     }
 
+
+
     public function actionUpdateTechnical($id)
     {
         $model = $this->findModel($id);
@@ -305,6 +310,65 @@ class MasterTemplateController extends Controller
         return $this->render('_form_leadership', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCreateOverview($positionId)
+    {
+        $models = [new TemplateOverview()];
+
+        if (Yii::$app->request->isPost) {
+            $models = TemplateOverview::createMultiple(TemplateOverview::class);
+            TemplateOverview::loadMultiple($models, Yii::$app->request->post());
+
+            foreach ($models as $model) {
+                $model->position_id = $positionId; // Set dari parameter URL atau form
+            }
+
+            if (TemplateOverview::validateMultiple($models)) {
+                foreach ($models as $model) {
+                    $model->save(false);
+                }
+                Yii::$app->session->setFlash('success', 'Data berhasil disimpan.');
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('_form_overview', [
+            'models' => $models,
+            'positionId' => $positionId,
+        ]);
+    }
+    public function actionUpdateOverview($id)
+    {
+        $model = TemplateOverview::findOne($id);
+        if (!$model || $model->flag != 1) {
+            throw new NotFoundHttpException('Data overview tidak ditemukan atau telah dinonaktifkan.');
+        }
+
+        $positionId = $model->position_id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Data overview berhasil diperbarui.');
+            return $this->redirect(['detail-template', 'id' => $positionId]);
+        }
+
+        return $this->render('_form_overview', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDeleteOverview($id)
+    {
+        $model = TemplateOverview::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Data overview tidak ditemukan.');
+        }
+
+        $model->flag = 0;
+        $model->save(false);
+
+        Yii::$app->session->setFlash('success', 'Data overview berhasil dihapus (nonaktif).');
+        return $this->redirect(['detail-template', 'id' => $model->position_id]);
     }
 
 }

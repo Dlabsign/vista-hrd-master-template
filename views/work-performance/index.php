@@ -49,6 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->objectives ? $model->objectives : '(not set)';
                     },
             ],
+            [
+                'attribute' => 'Weight',
+                'value' => function ($model) {
+                        return $model->weight ? $model->weight : '(not set)';
+                    },
+            ],
 
             [
                 'class' => ActionColumn::className(),

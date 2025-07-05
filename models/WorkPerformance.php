@@ -32,7 +32,7 @@ class WorkPerformance extends \yii\db\ActiveRecord
     {
         return [
             [['area_id', 'definition', 'objectives'], 'default', 'value' => null],
-            [['area_id', 'flag'], 'integer'],
+            [['area_id', 'weight', 'flag'], 'integer'],
             [['definition', 'objectives'], 'string'],
             [['created_at'], 'safe'],
         ];
@@ -49,6 +49,7 @@ class WorkPerformance extends \yii\db\ActiveRecord
             'definition' => 'Definition',
             'objectives' => 'Objectives',
             'created_at' => 'Created At',
+            'weight' => 'Weight',
             'flag' => 'flag',
         ];
     }

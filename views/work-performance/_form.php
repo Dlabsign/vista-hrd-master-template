@@ -20,8 +20,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'definition')->dropDownList(
         ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'definition')
     ) ?>
-    <?= $form->field($model, 'objectives')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'weight') ?>
+
+    <?= $form->field($model, 'objectives')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

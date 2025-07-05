@@ -29,7 +29,7 @@ class GeneralCompetencies extends \yii\db\ActiveRecord
             [['core_id', 'area_id', 'definition', 'objectives'], 'required'],
             [['core_id', 'area_id', 'flag'], 'integer'],
             [['created_at'], 'safe'],
-            [['definition', 'objectives'], 'string', 'max' => 100],
+            [['definition', 'objectives', 'objectives_indo'], 'string', 'max' => 100],
         ];
     }
 
@@ -41,6 +41,7 @@ class GeneralCompetencies extends \yii\db\ActiveRecord
             'area_id' => 'Key Area',
             'definition' => 'Definition',
             'objectives' => 'Objectives',
+            'objectives_indo' => 'Objectives',
             'flag' => 'flag',
             'created_at' => 'Created At',
         ];

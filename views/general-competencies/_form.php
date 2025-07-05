@@ -25,7 +25,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'definition')->dropDownList(
         ArrayHelper::map(MasterPerformanceManagement::find()->where(['flag' => 1])->all(), 'id', 'definition')
     ) ?>
-    <?= $form->field($model, 'objectives')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'objectives')->textarea(['rows' => 6])->label('Objectives (En  )') ?>
+
+    <?= $form->field($model, 'objectives_indo')->textarea(['rows' => 6])->label('Objectives (Indo)') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
